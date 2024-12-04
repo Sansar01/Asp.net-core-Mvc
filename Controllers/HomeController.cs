@@ -6,16 +6,24 @@ namespace Asp.net_core_Mvc.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly StudentDbContext studentDb;
 
-        public HomeController(ILogger<HomeController> logger)
+        //private readonly ILogger<HomeController> _logger;
+
+        //public HomeController(ILogger<HomeController> logger)
+        //{
+        //    _logger = logger;
+        //}
+
+        public HomeController(StudentDbContext studentDb)
         {
-            _logger = logger;
+            this.studentDb = studentDb;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var stdData = studentDb.Students.ToList();
+            return View(stdData);
         }
 
         public IActionResult Privacy()
