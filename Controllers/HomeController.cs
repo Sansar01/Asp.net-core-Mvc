@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Asp.net_core_Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Asp.net_core_Mvc.Controllers
 {
@@ -20,10 +21,28 @@ namespace Asp.net_core_Mvc.Controllers
             this.studentDb = studentDb;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var stdData = studentDb.Students.ToList();
+            var stdData = await studentDb.Students.ToListAsync();
             return View(stdData);
+        }
+
+        public IActionResult Create()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Student std)
+        {
+            if (ModelState.IsValid)
+            {
+                await studentDb.Students.AddAsync(std);
+                await  studentDb.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
         }
 
         public IActionResult Privacy()
