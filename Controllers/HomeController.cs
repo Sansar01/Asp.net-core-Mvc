@@ -62,7 +62,11 @@ namespace Asp.net_core_Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Student std)
         {
-            var findData = await studentDb.Students.Where(item => item.Id == std.Id).FirstAsync();
+           if(ModelState.IsValid)
+            {
+                await studentDb.Students.ExecuteUpdateAsync(item=>item.SetProperty(item=>item.Name,std.Name).SetProperty(item=>item.Gender,std.Gender).SetProperty(item=>item.Age,std.Age).SetProperty(item=>item.Branch,std.Branch));
+                await studentDb.SaveChangesAsync();
+            }
 
             return View();
         }
