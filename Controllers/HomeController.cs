@@ -60,15 +60,15 @@ namespace Asp.net_core_Mvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Student std)
+        public async Task<IActionResult> Edit(int id,Student std)
         {
            if(ModelState.IsValid)
             {
-                await studentDb.Students.ExecuteUpdateAsync(item=>item.SetProperty(item=>item.Name,std.Name).SetProperty(item=>item.Gender,std.Gender).SetProperty(item=>item.Age,std.Age).SetProperty(item=>item.Branch,std.Branch));
+                await studentDb.Students.Where(item=>item.Id == std.Id).ExecuteUpdateAsync(item=>item.SetProperty(item=>item.Name,std.Name).SetProperty(item=>item.Gender,std.Gender).SetProperty(item=>item.Age,std.Age).SetProperty(item=>item.Branch,std.Branch));
                 await studentDb.SaveChangesAsync();
             }
 
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> Delete(int id)
