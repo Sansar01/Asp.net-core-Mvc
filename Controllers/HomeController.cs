@@ -40,6 +40,7 @@ namespace Asp.net_core_Mvc.Controllers
             {
                 await studentDb.Students.AddAsync(std);
                 await studentDb.SaveChangesAsync();
+                TempData["insert_success"] = "Inserted...";
                 return RedirectToAction("Index", "Home");
             }
             return View();
@@ -54,7 +55,7 @@ namespace Asp.net_core_Mvc.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var updateData = await studentDb.Students.Where(item => item.Id == id).FirstAsync();
+            var updateData = await studentDb.Students.FindAsync(id);
 
             return View(updateData);
         }
@@ -62,19 +63,27 @@ namespace Asp.net_core_Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id,Student std)
         {
-           if(ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
-                await studentDb.Students.Where(item=>item.Id == std.Id).ExecuteUpdateAsync(item=>item.SetProperty(item=>item.Name,std.Name).SetProperty(item=>item.Gender,std.Gender).SetProperty(item=>item.Age,std.Age).SetProperty(item=>item.Branch,std.Branch));
+                studentDb.Students.Update(std);
+                TempData["edit_success"] = "Updated...";
                 await studentDb.SaveChangesAsync();
             }
-
             return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            await studentDb.Students.Where(item => item.Id == id).ExecuteDeleteAsync();
+
+            var stdData = await studentDb.Students.FindAsync(id);
+
+            if(stdData!= null)
+            {
+                studentDb.Students.Remove(stdData); 
+            }
             await studentDb.SaveChangesAsync();
+            TempData["delete_success"] = "Deleted...";
             return RedirectToAction("Index", "Home");
         }
 
