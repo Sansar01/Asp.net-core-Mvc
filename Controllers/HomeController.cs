@@ -34,6 +34,7 @@ namespace Asp.net_core_Mvc.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Student std)
         {
             if (ModelState.IsValid)
@@ -61,6 +62,7 @@ namespace Asp.net_core_Mvc.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,Student std)
         {
 
@@ -73,6 +75,8 @@ namespace Asp.net_core_Mvc.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
 

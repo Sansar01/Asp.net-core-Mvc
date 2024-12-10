@@ -9,6 +9,20 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+@{
+    if(TempData["insert_success"]!=null)
+    {
+        <h4>Created</h4>
+    }
+    if (TempData["update_success"] != null)
+    {
+        <h4>Updated</h4>
+    }
+    if(TempData["delete_success"]!=null)
+    {
+        <h4>Updated</h4>
+    }
+}
 <table class="table">
     <thead>
         <tr>
