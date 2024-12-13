@@ -1,10 +1,13 @@
 ﻿@model Asp.net_core_Mvc.Models.Student
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor accessor
 
 @{
     ViewData["Title"] = "Details";
 }
 
 <h1>Details</h1>
+<h4>@accessor.HttpContext.Session.GetString("key")</h4>
 
 <div>
     <h4>Student</h4>

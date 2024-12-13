@@ -18,17 +18,22 @@ namespace Asp.net_core_Mvc.Controllers
 
         public HomeController(StudentDbContext studentDb)
         {
-            this.studentDb = studentDb;
+              this.studentDb = studentDb;
         }
 
         public async Task<IActionResult> Index()
         {
+            HttpContext.Session.SetString("key", "Asp.net core mvc");
             var stdData = await studentDb.Students.ToListAsync();
             return View(stdData);
         }
 
         public IActionResult Create()
         {
+            if(HttpContext.Session.GetString("key")!=null)
+            {
+                ViewBag.key = HttpContext.Session.GetString("key").ToString();
+            }
 
             return View();
         }
