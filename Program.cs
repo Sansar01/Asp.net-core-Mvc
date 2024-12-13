@@ -9,6 +9,7 @@ builder.Services.AddControllersWithViews();
 var provider = builder.Services.BuildServiceProvider();
 var config = provider.GetRequiredService<IConfiguration>();
 builder.Services.AddDbContext<StudentDbContext>(item=>item.UseSqlServer(config.GetConnectionString("dbcs")));
+builder.Services.AddDbContext<UserDbContext>(item => item.UseSqlServer(config.GetConnectionString("dbcs")));
 
 builder.Services.AddSession();
 builder.Services.AddSession(options =>
