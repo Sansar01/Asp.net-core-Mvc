@@ -4,7 +4,7 @@ namespace Asp.net_core_Mvc.Models
 {
     public class UserDbContext : DbContext
     {
-        public UserDbContext(DbContextOptions options) : base(options)
+        public UserDbContext(DbContextOptions<UserDbContext> options) : base(options)
         {
             
         }
