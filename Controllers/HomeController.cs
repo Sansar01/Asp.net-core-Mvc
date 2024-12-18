@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Asp.net_core_Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Asp.net_core_Mvc.Controllers
@@ -30,7 +31,16 @@ namespace Asp.net_core_Mvc.Controllers
 
         public IActionResult Create()
         {
-            if(HttpContext.Session.GetString("key")!=null)
+
+            List<SelectListItem> Gender = new()
+             {
+                 new SelectListItem{Value = "Male" , Text="Male"},
+                 new SelectListItem{Value = "Female" , Text="Female"}
+             };
+
+            ViewBag.Gender = Gender;
+
+            if (HttpContext.Session.GetString("key")!=null)
             {
                 ViewBag.key = HttpContext.Session.GetString("key").ToString();
             }
@@ -61,6 +71,14 @@ namespace Asp.net_core_Mvc.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
+            List<SelectListItem> Gender = new()
+             {
+                 new SelectListItem{Value = "Male" , Text="Male"},
+                 new SelectListItem{Value = "Female" , Text="Female"}
+             };
+
+            ViewBag.Gender = Gender;
+
             var updateData = await studentDb.Students.FindAsync(id);
 
             return View(updateData);
@@ -94,6 +112,37 @@ namespace Asp.net_core_Mvc.Controllers
             await studentDb.SaveChangesAsync();
             TempData["delete_success"] = "Deleted...";
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult StudentView()
+        {
+            StudentModel model = new StudentModel();
+            model.StudentList = new List<SelectListItem>();
+
+            var data = studentDb.Students.ToList();
+
+            model.StudentList.Add(new SelectListItem
+            {
+                Text = "Select Name",
+                Value = ""
+            });
+
+            foreach (var item in data)
+            {
+                model.StudentList.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                });
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult StudentView(StudentModel std)
+        {
+            return View();
         }
 
         public IActionResult Privacy()
