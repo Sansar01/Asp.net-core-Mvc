@@ -2,6 +2,9 @@ using System.Diagnostics;
 using Asp.net_core_Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Newtonsoft.Json.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Asp.net_core_Mvc.Controllers
 {
@@ -15,6 +18,35 @@ namespace Asp.net_core_Mvc.Controllers
         //{
         //    _logger = logger;
         //}
+
+        public IActionResult Checkbox()
+        {
+            var model = new ViewModel()
+            {
+                CheckBoxes = new List<CheckBoxOption> 
+                { 
+                  new CheckBoxOption()
+                  {
+                      isChecked = true,
+                      Text = "Cricket",
+                      Value = "Cricket"
+                  },
+                  new CheckBoxOption()
+                  {
+                      isChecked = false,
+                      Text = "Football",
+                      Value = "Football"
+                  },
+                  new CheckBoxOption()
+                  {
+                      isChecked = true,
+                      Text = "Hockey",
+                      Value = "Hockey"
+                  }
+                }
+            };
+            return View();
+        }
 
         public HomeController(StudentDbContext studentDb)
         {
