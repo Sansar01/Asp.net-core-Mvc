@@ -46,7 +46,13 @@ namespace Asp.net_core_Mvc.Controllers
                   }
                 }
             };
-            return View();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Checkbox(ViewModel model)
+        {
+             return View();
         }
 
         public HomeController(StudentDbContext studentDb)

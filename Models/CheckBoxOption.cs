@@ -1,4 +1,6 @@
-﻿namespace Asp.net_core_Mvc.Models
+﻿
+
+namespace Asp.net_core_Mvc.Models
 {
     public class CheckBoxOption
     {

@@ -6,8 +6,12 @@
 }
 
 
-@foreach(var item in Model.CheckBoxes)
-{
-    <input type="checkbox" value="@item.Value" class="form-control-input" id=""  />
-    <label class="form-check-label" for="flexCheckDefault" ></label>
-}
+<form asp-action="Checkbox" asp-controller="Home" >
+    @foreach (var item in Model.CheckBoxes)
+    {
+        <input type="checkbox" value="@item.Value" class="form-control-input" id="checkbox_@item.Value" name="CheckText" checked="@item.isChecked" />
+        <label class="form-check-label" for="flexCheckDefault">@item.Text</label>
+    }
+
+    <input type="submit" value="Submit" />
+</form>

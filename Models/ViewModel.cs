@@ -4,6 +4,6 @@
     {
         public List<CheckBoxOption> CheckBoxes { get; set; }
 
-        public  List<CheckBoxOption> CheckText { get; set; }
+        public  List<string> CheckText { get; set; }
     }
 }
